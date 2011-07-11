@@ -11,41 +11,40 @@ while (k<numFrames)
         frame=read(video.readerobj,k);
         imshow(frame);
         title(['Frame ', num2str(k), ' out of ',num2str(numFrames)]);
-        reply = input('skip? ','s');
-        if(reply=='y')
-            skipnum = input('How many frames? ');
-            if(k+skipnum < numFrames)
-                k=k+skipnum;
+        reply = input('How many frames to skip? ');
+        if(reply==0)
+            sentinel=0;
+        else
+            if(k+reply < numFrames)
+                k=k+reply;
             else
                 k=numFrames;
             end
-        else
-            sentinel=0;
         end
     end
     pos=getTailHead(frame);
     distance=HTdistance(pos);
     if(distance<100)
-        if(k > 40 && k <= numFrames-40)
-            leftBuff=40;
-            rightBuff=40;
+        if(k > 45 && k <= numFrames-45)
+            leftBuff=45;
+            rightBuff=45;
         else
-            if(k<40)
+            if(k<45)
                 leftBuff=k;
-                rightBuff=40;
+                rightBuff=45;
             else
-                leftBuff=40;
+                leftBuff=45;
                 rightBuff=(numFrames-k);
             end
         end
         omegaTurnArray{index,1}=VideoReader(video.readerobj,k-leftBuff,k+rightBuff)
         omegaTurnArray{index,2}=getTurnInfo(omegaTurnArray{index,1});
         index=index+1;
-        if(k+40>numFrames)
+        if(k+rightBuff==numFrames)
             break;
         else
-            k=k+40;
+            k=k+rightBuff;
         end
     end
     k=k+1;
-end;
+end

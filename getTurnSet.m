@@ -8,22 +8,20 @@ dThetaPast=0;
 counter=0;
 %initialize reorientation counter
 index=1;    
-for k=1:size(bodyVectors,3)
-    dTheta=calculateAngle(bodyVectors(:,k),axisVector);
+for k=1:size(bodyVectors,2)
+    dTheta=calculateAngle(bodyVectors(:,k),axisVector)
     if(abs(dTheta-dThetaPast)<5)
         counter=counter+1;
     else
          counter=0;
     end
-    if(counter<40)
-        turnSet(index)=[dtheta, [k-40,k]];
-        axisVector=bodyVectors(:,k);
+   
+    if(counter>15)
+        turnSet(:,:,index)=[k-40,k,dTheta]
+        axisVector=bodyVectors(:,k)
         counter=0;
         index=index+1;
     end
     dThetaPast=dTheta;
 end
 end
-    
-    
-    

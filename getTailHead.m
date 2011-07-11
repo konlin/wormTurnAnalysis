@@ -1,27 +1,23 @@
 function pos=getTailHead(frame)
 %allows the user to select the tail vector and head vector of the animal
-NUMOFPOINTS=4;
 
 imshow(frame);
 hold on;
-pos=zeros(NUMOFPOINTS,2);
-for m=1:NUMOFPOINTS
+pos=zeros(2,2);
+for m=1:2
     if(m==1)
-        title('define tail vector');
+        title('locate tail');
     else
-        if(m==3)
-            title('define head vector');
-        end
+        title('locate head');
     end        
     [x,y]=ginput(1);
     pos(m,:)=[y,x];
-    if(m==1||m==2)
+    if(m==1)
         plot(x,y,'sg');
-    end
-    if(m==3||m==4)
+    else
         plot(x,y,'sr');
     end
-    if(m==NUMOFPOINTS)
+    if(m==2)
         title('Click anywhere to continue');
         k = waitforbuttonpress;
     end   
