@@ -4,5 +4,6 @@ function [pos,bodyVectors,turnSet]=findOmegaTurns(video)
 [headPos,tailPos]=getTailHeadSet(video);
 bodyVectors=getBodyVectorSet(headPos,tailPos);
 turnSet=getTurnSet(bodyVectors);
+pos=[headPos,tailPos];
 
 end

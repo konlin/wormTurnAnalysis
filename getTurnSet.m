@@ -15,8 +15,7 @@ for k=1:size(bodyVectors,2)
     else
          counter=0;
     end
-   
-    if(counter>15)
+    if(counter>3)
         turnSet(:,:,index)=[k-40,k,dTheta]
         axisVector=bodyVectors(:,k)
         counter=0;
