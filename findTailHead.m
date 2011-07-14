@@ -1,19 +1,22 @@
-function [headPos,tailPos]=findTailHead(frame)
-
+function [headPos,tailPos,newDirectionVector]=findTailHead(frame)
 boundary=getBoundary(frame);
            
 function ButtonDownFcn(src,evnt)
     if (strcmp(get(src,'SelectionType'),'alt'))
-        disp('it works?');
+        disp('Switching...');
         temp=headIndex;
         headIndex=tailIndex;
         tailIndex=temp;
     end
     if(strcmp(get(src,'SelectionType'),'extend'))
-        disp('woopy');
+        disp('Redefining head and tail...');
         pos=getTailHead(frame)
         headPos=pos(2);
         tailPos=pos(1);
+    end
+    if(strcmp(get(src,'SelectionType'),'open'))
+        disp('Redefining direction...');
+        newDirectionVector=getDirectionVector(frame);
     end
     plot(boundary(headIndex,2),boundary(headIndex,1),'sr');
     plot(boundary(tailIndex,2),boundary(tailIndex,1),'sg');
@@ -22,6 +25,7 @@ end
 if(numel(boundary)<200)
     headPos=[0,0];
     tailPos=[0,0];
+    newDirectionVector=[0,0];
 else
     boundaryVectors=getBoundaryVectors(boundary);
     headIndex=1;
@@ -39,6 +43,7 @@ else
         headPos=[0,0];
         tailPos=[0,0];
     else
+        newDirectionVector=[-999,-999];
         tailIndex=locs(2);
         headIndex=locs(1);
         hold on;
